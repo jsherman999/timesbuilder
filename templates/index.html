@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NYT &middot; via archive.ph</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="masthead">
+    <h1>The New York Times</h1>
+    <p class="sub">Homepage rebuilt with archive.ph links &middot; fetched {{ fetched_at }}</p>
+  </header>
+
+  <main class="grid">
+    {% for a in articles %}
+    <article class="card {% if loop.index0 < 2 %}hero{% endif %}">
+      <a class="card-link" href="{{ archive_url(a.url) }}" target="_blank" rel="noopener noreferrer">
+        {% if a.image_url %}
+          <img class="card-img" src="{{ a.image_url }}" alt="" loading="lazy">
+        {% endif %}
+        <h2 class="card-title">{{ a.title }}</h2>
+        {% if a.summary %}<p class="card-summary">{{ a.summary }}</p>{% endif %}
+      </a>
+      <div class="card-meta">
+        <span class="badge">archive.ph</span>
+        <a class="orig" href="{{ a.url }}" target="_blank" rel="noopener noreferrer">NYT original &rsaquo;</a>
+      </div>
+    </article>
+    {% endfor %}
+  </main>
+
+  <footer class="footer">
+    <p>{{ articles|length }} articles from the NYT HomePage RSS feed.</p>
+  </footer>
+</body>
+</html>
