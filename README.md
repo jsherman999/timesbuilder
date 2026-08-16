@@ -10,6 +10,14 @@ articles that haven't been archived.
 If you want to read NYT content via archive.ph but don't want to copy/paste
 URLs one by one, point your browser here and click.
 
+## GitHub Pages
+
+A static snapshot of the page is published at
+**https://jsherman999.github.io/timesbuilder/**
+
+It's built from `docs/` on `main` (rebuild with
+`.venv/bin/python build_pages.py` and push to refresh the snapshot).
+
 ## How it works
 
 1. Fetches the NYT HomePage RSS feed (`rss.nytimes.com/.../HomePage.xml`).
@@ -48,6 +56,7 @@ The server binds to `0.0.0.0:8999` with no authentication.
 ```
 app.py                Flask server, 5-minute page cache, archive.ph URL builder
 scraper.py            NYT HomePage RSS → list[Article] with image URLs
+build_pages.py        Renders a static snapshot into docs/ for GitHub Pages
 templates/index.html  Reader-style grid template
 static/style.css      Typography + responsive 3/2/1-column layout
 requirements.txt      Flask, feedparser
