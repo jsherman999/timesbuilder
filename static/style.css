@@ -48,6 +48,16 @@ html, body {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.loading {
+  grid-column: 1 / -1;
+  margin: 24px auto;
+  color: var(--muted);
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 14px;
+}
+
+.loading.error { color: #8b1e1e; }
+
 .card {
   display: flex;
   flex-direction: column;

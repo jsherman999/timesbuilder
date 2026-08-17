@@ -12,15 +12,20 @@ URLs one by one, point your browser here and click.
 
 ## GitHub Pages
 
-A static snapshot of the page is published at
+The page is published at
 **https://jsherman999.github.io/timesbuilder/**
 
-It's built from `docs/` on `main` (rebuild with
-`.venv/bin/python build_pages.py` and push to refresh the snapshot).
+GitHub Pages serves a small static shell from `docs/`. On each page load,
+`static/app.js` fetches the current NYT HomePage RSS feed in the browser and
+builds the article grid. The RSS service may itself cache responses briefly,
+so "current" means the latest feed version available when the page loads.
+Rebuild the shell/assets with `.venv/bin/python build_pages.py` if the template
+or styles change; no NYT article snapshot is committed.
 
 ## How it works
 
-1. Fetches the NYT HomePage RSS feed (`rss.nytimes.com/.../HomePage.xml`).
+1. Fetches the NYT HomePage RSS feed (`rss.nytimes.com/.../HomePage.xml`),
+   server-side for Flask or client-side for GitHub Pages.
 2. Renders each item as a card in a responsive grid (hero + secondary).
 3. Each card's primary link is `https://archive.ph/<nyt-url>` — archive.ph
    redirects to the snapshot if one exists, or shows its search page if not.
@@ -56,7 +61,8 @@ The server binds to `0.0.0.0:8999` with no authentication.
 ```
 app.py                Flask server, 5-minute page cache, archive.ph URL builder
 scraper.py            NYT HomePage RSS → list[Article] with image URLs
-build_pages.py        Renders a static snapshot into docs/ for GitHub Pages
+build_pages.py        Builds the live RSS shell and assets into docs/
+static/app.js         Browser-side RSS fetcher and article-grid renderer
 templates/index.html  Reader-style grid template
 static/style.css      Typography + responsive 3/2/1-column layout
 requirements.txt      Flask, feedparser

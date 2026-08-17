@@ -9,9 +9,23 @@
 <body>
   <header class="masthead">
     <h1>The New York Times</h1>
-    <p class="sub">Homepage rebuilt with archive.ph links &middot; fetched {{ fetched_at }}</p>
+    {% if client_render %}
+      <p class="sub" id="status">Loading the current NYT HomePage&hellip;</p>
+    {% else %}
+      <p class="sub">Homepage rebuilt with archive.ph links &middot; fetched {{ fetched_at }}</p>
+    {% endif %}
   </header>
 
+  {% if client_render %}
+  <main class="grid" id="article-grid">
+    <p class="loading">Fetching the current NYT HomePage&hellip;</p>
+  </main>
+
+  <footer class="footer">
+    <p id="article-count">Loading articles&hellip;</p>
+  </footer>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  {% else %}
   <main class="grid">
     {% for a in articles %}
     <article class="card {% if loop.index0 < 2 %}hero{% endif %}">
@@ -33,5 +47,6 @@
   <footer class="footer">
     <p>{{ articles|length }} articles from the NYT HomePage RSS feed.</p>
   </footer>
+  {% endif %}
 </body>
 </html>
